@@ -15,15 +15,22 @@ import java.util.List;
 
 public class BusDao extends MySQLDao<Bus> implements IBusDao {
     private static final Logger LOGGER = LogManager.getLogger(BusDao.class);
+    private static final String CREATE_ENTITY_SQL = "INSERT INTO Bus (id, bus_number, vehicle_id) VALUES (?, ?, ?)";
+    private static final String GET_ENTITY_BY_ID_SQL = "SELECT * FROM Bus WHERE id = ?";
+    private static final String UPDATE_ENTITY_SQL = "UPDATE Bus SET bus_number = ?, vehicle_id = ? WHERE id = ?";
+    private static final String DELETE_ENTITY_SQL = "DELETE FROM Bus WHERE id = ?";
+    private static final String GET_ENTITY_BY_BUS_NUMBER_SQL = "SELECT * FROM Bus WHERE bus_number = ?";
+    private static final String GET_ALL_ENTITIES_SQL = "SELECT * FROM Bus";
+
+
 
     @Override
     public Bus createEntity(Bus entity){
-        String sql = "INSERT INTO Bus (id, bus_number, vehicle_id) VALUES (?, ?, ?)";
         PreparedStatement statement = null;
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(CREATE_ENTITY_SQL);
             statement.setLong(1, entity.getId());
             statement.setInt(2, entity.getBusNumber());
             statement.setLong(3, entity.getVehicleId());
@@ -31,49 +38,30 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return entity;
     }
 
     @Override
     public Bus getEntityById(long id){
-        String sql = "SELECT * FROM Bus WHERE id = ?";
         PreparedStatement statement = null;
         Connection connection = null;
         Bus bus = null;
         ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(GET_ENTITY_BY_ID_SQL);
             statement.setLong(1, id);
             resultSet = statement.executeQuery();
             bus = resultSetToObject(resultSet);
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            closeResource(resultSet);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return bus;
     }
@@ -81,12 +69,11 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
 
     @Override
     public void updateEntity(Bus entity){
-        String sql = "UPDATE Bus SET bus_number = ?, vehicle_id = ? WHERE id = ?";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(UPDATE_ENTITY_SQL);
             statement.setInt(1, entity.getBusNumber());
             statement.setLong(2, entity.getVehicleId());
             statement.setLong(3, entity.getId());
@@ -94,89 +81,60 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
 
     @Override
     public void deleteEntity(long id){
-        String sql = "DELETE FROM Bus WHERE id = ?";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(DELETE_ENTITY_SQL);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
     @Override
     public Bus getBusByBusNumber(Integer busNumber){
-        String sql = "SELECT * FROM Bus WHERE bus_number = ?";
         PreparedStatement statement = null;
         Connection connection = null;
         Bus bus = null;
         ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(GET_ENTITY_BY_BUS_NUMBER_SQL);
             statement.setLong(1, busNumber);
             resultSet = statement.executeQuery();
             bus = resultSetToObject(resultSet);
         } catch (Exception e){
             LOGGER.info(e);
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+           closeResource(statement);
+           closeResource(resultSet);
+           ConnectionPool.getInstance().releaseConnection(connection);
         }
         return bus;
     }
 
     @Override
     public List<Bus> getAllBuses(){
-        String sql = "SELECT * FROM Bus";
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         List<Bus> buses = new ArrayList<>();
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(GET_ALL_ENTITIES_SQL);
             resultSet = statement.executeQuery();
             while (resultSet.next()){
                 Bus bus = new Bus();
@@ -188,19 +146,9 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            closeResource(resultSet);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return buses;
     }
@@ -220,7 +168,6 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
         }
         return bus;
     }
-
 
 
 }

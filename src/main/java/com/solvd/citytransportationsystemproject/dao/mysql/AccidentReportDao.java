@@ -16,15 +16,21 @@ import java.util.List;
 
 public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAccidentReportDao {
     private static final Logger LOGGER = LogManager.getLogger(AccidentReportDao.class);
+    private static final String CREATE_ENTITY_SQL = "INSERT INTO AccidentReport (id, date, description, person_id, vehicle_id) VALUES (?, ?, ?, ?, ?)";
+    private static final String GET_ENTITY_BY_ID_SQL = "SELECT * FROM AccidentReport WHERE id = ?";
+    private static final String UPDATE_ENTITY_SQL = "UPDATE AccidentReport SET date = ?, description = ?, person_id = ?, vehicle_id = ? WHERE id = ?";
+    private static final String DELETE_ENTITY_SQL = "DELETE FROM AccidentReport WHERE id = ?";
+    private static final String GET_ENTITY_BY_DATE_SQL = "SELECT * FROM AccidentReport WHERE date = ?";
+    private static final String GET_ENTITY_BY_VEHICLE_ID_SQL = "SELECT * FROM AccidentReport WHERE vehicle_id = ?";
+    private static final String GET_ALL_ENTITIES_SQL = "SELECT * FROM AccidentReport";
 
     @Override
     public AccidentReport createEntity(AccidentReport entity){
-        String sql = "INSERT INTO AccidentReport (id, date, description, person_id, vehicle_id) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement statement = null;
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(CREATE_ENTITY_SQL);
             statement.setLong(1, entity.getId());
             statement.setDate(2, entity.getDate());
             statement.setString(3, entity.getDescription());
@@ -34,16 +40,8 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return entity;
     }
@@ -52,45 +50,33 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
 
     @Override
     public AccidentReport getEntityById(long id){
-        String sql = "SELECT * FROM AccidentReport WHERE id = ?";
         PreparedStatement statement = null;
         Connection connection = null;
         AccidentReport accidentReport = null;
         ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(GET_ENTITY_BY_ID_SQL);
             statement.setLong(1, id);
             resultSet = statement.executeQuery();
             accidentReport = resultSetToObject(resultSet);
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            closeResource(resultSet);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return accidentReport;
     }
 
     @Override
     public void updateEntity(AccidentReport entity){
-        String sql = "UPDATE AccidentReport SET date = ?, description = ?, person_id = ?, vehicle_id = ? WHERE id = ?";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(UPDATE_ENTITY_SQL);
             statement.setDate(1, entity.getDate());
             statement.setString(2, entity.getDescription());
             statement.setLong(3, entity.getPersonId());
@@ -100,74 +86,46 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
     @Override
     public void deleteEntity(long id){
-        String sql = "DELETE FROM AccidentReport WHERE id = ?";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(DELETE_ENTITY_SQL);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
     @Override
     public AccidentReport getAccidentReportByDate(Date date){
-        String sql = "SELECT * FROM AccidentReport WHERE date = ?";
         PreparedStatement statement = null;
         Connection connection = null;
         AccidentReport accidentReport = null;
         ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(GET_ENTITY_BY_DATE_SQL);
             statement.setDate(1, date);
             resultSet = statement.executeQuery();
             accidentReport = resultSetToObject(resultSet);
         } catch (Exception e){
             LOGGER.info(e);
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            closeResource(resultSet);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return accidentReport;
     }
@@ -176,47 +134,35 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
 
     @Override
     public AccidentReport getAccidentReportByVehicleId(long vehicleId){
-        String sql = "SELECT * FROM AccidentReport WHERE vehicle_id = ?";
         PreparedStatement statement = null;
         Connection connection = null;
         AccidentReport accidentReport = null;
         ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(GET_ENTITY_BY_VEHICLE_ID_SQL);
             statement.setLong(1, vehicleId);
             resultSet = statement.executeQuery();
             accidentReport = resultSetToObject(resultSet);
         } catch (Exception e){
             LOGGER.info(e);
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            closeResource(resultSet);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return accidentReport;
     }
 
     @Override
     public List<AccidentReport> getAllAccidentReports(){
-        String sql = "SELECT * FROM AccidentReport";
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         List<AccidentReport> accidentReports = new ArrayList<>();
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(GET_ALL_ENTITIES_SQL);
             resultSet = statement.executeQuery();
             while (resultSet.next()){
                 AccidentReport accidentReport = new AccidentReport();
@@ -230,19 +176,9 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+                closeResource(statement);
+                closeResource(resultSet);
+                ConnectionPool.getInstance().releaseConnection(connection);
         }
         return accidentReports;
     }

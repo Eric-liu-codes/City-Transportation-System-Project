@@ -135,11 +135,11 @@ CREATE TABLE IF NOT EXISTS `TransportationSystem`.`Station` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `TransportationSystem`.`StationNeighbor`
+-- Table `TransportationSystem`.`StationConnection`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `TransportationSystem`.`StationNeighbor`;
+DROP TABLE IF EXISTS `TransportationSystem`.`StationConnection`;
 
-CREATE TABLE IF NOT EXISTS `TransportationSystem`.`StationNeighbor` (
+CREATE TABLE IF NOT EXISTS `TransportationSystem`.`StationConnection` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `station1_id` INT NOT NULL,
   `station2_id` INT NOT NULL,
