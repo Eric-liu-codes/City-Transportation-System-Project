@@ -15,15 +15,20 @@ import java.util.List;
 
 public class PersonDao extends MySQLDao<Person> implements IPersonDao {
     private static final Logger LOGGER = LogManager.getLogger(PersonDao.class);
+    private static final String CREATE_ENTITY_SQL = "INSERT INTO Person (id, first_name, last_name, address, phone_number, email) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String GET_ENTITY_BY_ID_SQL = "SELECT * FROM Person WHERE id = ?";
+    private static final String UPDATE_ENTITY_SQL = "UPDATE Person SET first_name = ?, last_name = ?, address = ?, phone_number = ?, email = ? WHERE id = ?";
+    private static final String DELETE_ENTITY_SQL = "DELETE FROM Person WHERE id = ?";
+    private static final String GET_ENTITY_BY_LAST_NAME_SQL = "SELECT * FROM Person WHERE last_name = ?";
+    private static final String GET_ALL_ENTITIES_SQL = "SELECT * FROM Person";
 
     @Override
     public Person createEntity(Person entity){
-        String sql = "INSERT INTO Person (id, first_name, last_name, address, phone_number, email) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement statement = null;
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(CREATE_ENTITY_SQL);
             statement.setLong(1, entity.getId());
             statement.setString(2, entity.getFirstName());
             statement.setString(3, entity.getLastName());
@@ -34,16 +39,8 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return entity;
     }
@@ -51,33 +48,22 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
 
     @Override
     public Person getEntityById(long id){
-        String sql = "SELECT * FROM Person WHERE id = ?";
         PreparedStatement statement = null;
         Connection connection = null;
         Person person = null;
         ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(GET_ENTITY_BY_ID_SQL);
             statement.setLong(1, id);
             resultSet = statement.executeQuery();
             person = resultSetToObject(resultSet);
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            closeResource(resultSet);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return person;
     }
@@ -85,12 +71,11 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
 
     @Override
     public void updateEntity(Person entity){
-        String sql = "UPDATE Person SET first_name = ?, last_name = ?, address = ?, phone_number = ?, email = ? WHERE id = ?";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(UPDATE_ENTITY_SQL);
             statement.setString(1, entity.getFirstName());
             statement.setString(2, entity.getLastName());
             statement.setString(3, entity.getAddress());
@@ -101,89 +86,60 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
 
     @Override
     public void deleteEntity(long id){
-        String sql = "DELETE FROM Person WHERE id = ?";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(DELETE_ENTITY_SQL);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
     @Override
     public Person getPersonByLastName(String lastName){
-        String sql = "SELECT * FROM Person WHERE last_name = ?";
         PreparedStatement statement = null;
         Connection connection = null;
         Person person = null;
         ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(GET_ENTITY_BY_LAST_NAME_SQL);
             statement.setString(1, lastName);
             resultSet = statement.executeQuery();
             person = resultSetToObject(resultSet);
         } catch (Exception e){
             LOGGER.info(e);
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            closeResource(resultSet);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return person;
     }
 
     @Override
     public List<Person> getAllPersons(){
-        String sql = "SELECT * FROM Person";
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         List<Person> personList = new ArrayList<>();
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(GET_ALL_ENTITIES_SQL);
             resultSet = statement.executeQuery();
             while (resultSet.next()){
                 Person person = new Person();
@@ -198,19 +154,9 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
         } catch (Exception e) {
             LOGGER.info(e);
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    ConnectionPool.getInstance().releaseConnection(connection);
-                }
-            } catch (Exception e) {
-                LOGGER.info(e);
-            }
+            closeResource(statement);
+            closeResource(resultSet);
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return personList;
     }
@@ -234,7 +180,6 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
         }
         return person;
     }
-
 
 
 }

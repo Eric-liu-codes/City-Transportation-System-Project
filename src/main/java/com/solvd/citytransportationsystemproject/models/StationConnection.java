@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("StationNeighbor")
-@XmlRootElement(name = "StationNeighbor")
+@JsonRootName("StationConnection")
+@XmlRootElement(name = "StationConnection")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class StationConnection extends Model {
 
@@ -79,7 +79,7 @@ public class StationConnection extends Model {
 
     @Override
     public String toString() {
-        return "StationNeighbor [station1Id=" + station1Id + ", station2Id=" + station2Id + ", distance=" + distance + "]";
+        return "StationConnection [station1Id=" + station1Id + ", station2Id=" + station2Id + ", distance=" + distance + "]";
     }
 
     public Station getOtherStation(Station station) {

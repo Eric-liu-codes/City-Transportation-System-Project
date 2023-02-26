@@ -5,7 +5,7 @@
   
 <mapper namespace="com.solvd.citytransportationsystemproject.dao.IStationNeighborDao">
 
-  <resultMap id="StationNeighborResultMap" type="com.solvd.citytransportationsystemproject.models.StationNeighbor">
+  <resultMap id="StationConnectionResultMap" type="com.solvd.citytransportationsystemproject.models.StationConnection">
     <id property="id" column="id"/>
     <result property="station1Id" column="station1_id"/>
     <result property="station2Id" column="station2_id"/>
@@ -13,25 +13,25 @@
   </resultMap>
   
   <select id="getStationNeighborById" resultMap="StationNeighborResultMap" parameterType="long">
-    SELECT * FROM StationNeighbor WHERE id = #{id}
+    SELECT * FROM StationConnection WHERE id = #{id}
   </select>
   
   <select id="getAllStationNeighbors" resultMap="StationNeighborResultMap">
-    SELECT * FROM StationNeighbor
+    SELECT * FROM StationConnection
   </select>
   
-  <insert id="insert" parameterType="com.solvd.citytransportationsystemproject.models.StationNeighbor">
-    INSERT INTO StationNeighbor (id, station1_id, station2_id, distance)
+  <insert id="insert" parameterType="com.solvd.citytransportationsystemproject.models.StationConnection">
+    INSERT INTO StationConnection (id, station1_id, station2_id, distance)
     VALUES (#{id}, #{station1Id}, #{station2Id}, #{distance})
   </insert>
   
-  <update id="update" parameterType="com.solvd.citytransportationsystemproject.models.StationNeighbor">
-    UPDATE StationNeighbor SET station1_id = #{station1Id}, station2_id = #{station2Id}, distance = #{distance}
+  <update id="update" parameterType="com.solvd.citytransportationsystemproject.models.StationConnection">
+    UPDATE StationConnection SET station1_id = #{station1Id}, station2_id = #{station2Id}, distance = #{distance}
     WHERE id = #{id}
   </update>
   
   <delete id="delete" parameterType="long">
-    DELETE FROM StationNeighbor WHERE id = #{id}
+    DELETE FROM StationConnection WHERE id = #{id}
   </delete>
   
 </mapper>
