@@ -96,8 +96,5 @@ public class VehicleMaintenance extends Model {
 				this.vehicleId == maintenance.getVehicleId();
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.getId(), this.date, this.type, this.description, this.vehicleId);
-	}
+
 }

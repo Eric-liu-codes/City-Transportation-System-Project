@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonDao extends MySQLDao<Person> implements IPersonDao {
-    private static final Logger logger = LogManager.getLogger(PersonDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(PersonDao.class);
 
     @Override
     public Person createEntity(Person entity){
@@ -32,7 +32,7 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
             statement.setString(6, entity.getEmail());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -42,7 +42,7 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return entity;
@@ -63,7 +63,7 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
             resultSet = statement.executeQuery();
             person = resultSetToObject(resultSet);
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -76,7 +76,7 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return person;
@@ -99,7 +99,7 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
             statement.setLong(6, entity.getId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -109,7 +109,7 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -126,7 +126,7 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -136,7 +136,7 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -155,7 +155,7 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
             resultSet = statement.executeQuery();
             person = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -168,7 +168,7 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return person;
@@ -196,7 +196,7 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
                 personList.add(person);
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -209,7 +209,7 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return personList;
@@ -230,14 +230,10 @@ public class PersonDao extends MySQLDao<Person> implements IPersonDao {
                 person.setEmail(resultSet.getString("email"));
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         }
         return person;
     }
-
-
-
-
 
 
 

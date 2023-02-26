@@ -75,8 +75,5 @@ public class Ticket extends Model {
 				Objects.equals(paymentMethod, ticket.paymentMethod);
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(paymentMethod, fare, passengerId);
-	}
+
 }

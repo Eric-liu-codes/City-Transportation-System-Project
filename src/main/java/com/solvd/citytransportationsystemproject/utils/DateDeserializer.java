@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 public class DateDeserializer extends StdDeserializer<Date> {
 	
-    private final Logger logger = LogManager.getLogger(DateDeserializer.class);
+    private final Logger LOGGER = LogManager.getLogger(DateDeserializer.class);
 
 	private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -34,7 +34,7 @@ public class DateDeserializer extends StdDeserializer<Date> {
 		try {
 			return formatter.parse(date);
 		} catch (ParseException e) {
-			logger.info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}

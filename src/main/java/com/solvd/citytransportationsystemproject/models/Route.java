@@ -76,8 +76,4 @@ public class Route extends Model {
 				Objects.equals(stations, route.stations);
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(name, vehicleId, stations);
-	}
 }

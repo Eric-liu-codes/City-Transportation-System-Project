@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAccidentReportDao {
-    private static final Logger logger = LogManager.getLogger(AccidentReportDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(AccidentReportDao.class);
 
     @Override
     public AccidentReport createEntity(AccidentReport entity){
@@ -32,7 +32,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
             statement.setLong(5, entity.getVehicleId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -42,7 +42,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return entity;
@@ -64,7 +64,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
             resultSet = statement.executeQuery();
             accidentReport = resultSetToObject(resultSet);
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -77,7 +77,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return accidentReport;
@@ -98,7 +98,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
             statement.setLong(5, entity.getId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -108,7 +108,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -124,7 +124,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -134,7 +134,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -153,7 +153,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
             resultSet = statement.executeQuery();
             accidentReport = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -166,7 +166,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return accidentReport;
@@ -188,7 +188,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
             resultSet = statement.executeQuery();
             accidentReport = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -201,7 +201,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return accidentReport;
@@ -228,7 +228,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
                 accidentReports.add(accidentReport);
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -241,7 +241,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return accidentReports;
@@ -261,7 +261,7 @@ public class AccidentReportDao extends MySQLDao<AccidentReport> implements IAcci
                 accidentReport.setVehicleId(resultSet.getLong("vehicle_id"));
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         }
         return accidentReport;
     }

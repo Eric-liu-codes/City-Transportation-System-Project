@@ -93,9 +93,5 @@ public class AccidentReport extends Model {
 				getVehicleId() == that.getVehicleId();
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(getId(), getDate(), getDescription(), getPersonId(), getVehicleId());
-	}
 }
 

@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 public class TimestampDeserializer extends JsonDeserializer<Timestamp> {
-	final Logger logger = LogManager.getLogger(TimestampDeserializer.class.getName());
+	final Logger LOGGER = LogManager.getLogger(TimestampDeserializer.class.getName());
 
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -27,7 +27,7 @@ public class TimestampDeserializer extends JsonDeserializer<Timestamp> {
 			Date parsedDate = dateFormat.parse(date);
 			return new Timestamp(parsedDate.getTime());
 		} catch (ParseException e) {
-			logger.info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}

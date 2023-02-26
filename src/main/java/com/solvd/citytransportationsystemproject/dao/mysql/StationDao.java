@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StationDao extends MySQLDao<Station> implements IStationDao {
-    private static final Logger logger = LogManager.getLogger(StationDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(StationDao.class);
 
     @Override
     public Station createEntity(Station entity){
@@ -31,7 +31,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
             statement.setLong(5, entity.getRouteId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -41,7 +41,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return entity;
@@ -62,7 +62,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
             resultSet = statement.executeQuery();
             station = resultSetToObject(resultSet);
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -75,7 +75,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return station;
@@ -97,7 +97,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
             statement.setLong(5, entity.getId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -107,7 +107,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -124,7 +124,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -134,7 +134,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -153,7 +153,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
             resultSet = statement.executeQuery();
             station = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -166,7 +166,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return station;
@@ -193,7 +193,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
                 stations.add(station);
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -206,7 +206,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return stations;
@@ -226,7 +226,7 @@ public class StationDao extends MySQLDao<Station> implements IStationDao {
                 station.setRouteId(resultSet.getLong("route_id"));
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         }
         return station;
     }

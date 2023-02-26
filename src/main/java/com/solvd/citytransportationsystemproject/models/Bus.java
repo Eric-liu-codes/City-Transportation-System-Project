@@ -18,7 +18,7 @@ public class Bus extends Vehicle {
 	
 	@JsonProperty("busNumber")
     @XmlElement
-	private int busNumber;
+	private Integer busNumber;
 	
 	@JsonProperty("vehicleID")
     @XmlElement
@@ -28,17 +28,17 @@ public class Bus extends Vehicle {
 		super();
 	}
 
-	public Bus(long id, String make, String model, int year, int capacity, long driverId, int busNumber, long vehicleId) {
+	public Bus(long id, String make, String model, Integer year, Integer capacity, long driverId, Integer busNumber, long vehicleId) {
         super(id, make, model, year, capacity, driverId);
         this.busNumber = busNumber;
         this.vehicleId = vehicleId;
     }
 
-	public int getBusNumber() {
+	public Integer getBusNumber() {
 		return busNumber;
 	}
 
-	public void setBusNumber(int busNumber) {
+	public void setBusNumber(Integer busNumber) {
 		this.busNumber = busNumber;
 	}
 
@@ -60,11 +60,6 @@ public class Bus extends Vehicle {
 		return super.equals(o) &&
 				busNumber == bus.busNumber &&
 				vehicleId == bus.vehicleId;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), busNumber, vehicleId);
 	}
 
     

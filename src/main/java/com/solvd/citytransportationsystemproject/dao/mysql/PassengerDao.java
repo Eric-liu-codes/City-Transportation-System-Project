@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
-    private static final Logger logger = LogManager.getLogger(PassengerDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(PassengerDao.class);
 
     @Override
     public Passenger createEntity(Passenger entity){
@@ -29,7 +29,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
             statement.setLong(3, entity.getPersonId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -39,7 +39,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return entity;
@@ -60,7 +60,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
             resultSet = statement.executeQuery();
             passenger = resultSetToObject(resultSet);
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -73,7 +73,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return passenger;
@@ -93,7 +93,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
             statement.setLong(3, entity.getId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -103,7 +103,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -120,7 +120,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -130,7 +130,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -148,7 +148,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
             resultSet = statement.executeQuery();
             passenger = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -161,7 +161,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return passenger;
@@ -186,7 +186,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
                 passengers.add(passenger);
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -199,7 +199,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return passengers;
@@ -217,7 +217,7 @@ public class PassengerDao extends MySQLDao<Passenger> implements IPassengerDao {
                 passenger.setPersonId(resultSet.getLong("person_id"));
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         }
         return passenger;
     }

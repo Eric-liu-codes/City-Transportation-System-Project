@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.solvd.citytransportationsystemproject.dao.IStationNeighborDao">
+
+  <resultMap id="StationNeighborResultMap" type="com.solvd.citytransportationsystemproject.models.StationNeighbor">
+    <id property="id" column="id"/>
+    <result property="station1Id" column="station1_id"/>
+    <result property="station2Id" column="station2_id"/>
+    <result property="distance" column="distance"/>
+  </resultMap>
+  
+  <select id="getStationNeighborById" resultMap="StationNeighborResultMap" parameterType="long">
+    SELECT * FROM StationNeighbor WHERE id = #{id}
+  </select>
+  
+  <select id="getAllStationNeighbors" resultMap="StationNeighborResultMap">
+    SELECT * FROM StationNeighbor
+  </select>
+  
+  <insert id="insert" parameterType="com.solvd.citytransportationsystemproject.models.StationNeighbor">
+    INSERT INTO StationNeighbor (id, station1_id, station2_id, distance)
+    VALUES (#{id}, #{station1Id}, #{station2Id}, #{distance})
+  </insert>
+  
+  <update id="update" parameterType="com.solvd.citytransportationsystemproject.models.StationNeighbor">
+    UPDATE StationNeighbor SET station1_id = #{station1Id}, station2_id = #{station2Id}, distance = #{distance}
+    WHERE id = #{id}
+  </update>
+  
+  <delete id="delete" parameterType="long">
+    DELETE FROM StationNeighbor WHERE id = #{id}
+  </delete>
+  
+</mapper>

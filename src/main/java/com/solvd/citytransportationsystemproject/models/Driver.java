@@ -22,7 +22,7 @@ public class Driver extends Person{
 	
 	@JsonProperty("yearsOfExperience")
     @XmlElement
-    private int yearsOfExperience;
+    private Integer yearsOfExperience;
 	
 	@JsonProperty("personID")
     @XmlElement
@@ -32,7 +32,7 @@ public class Driver extends Person{
 		super();
 	}
 
-	public Driver(long id, String firstName, String lastName, String address, String phoneNumber, String email, String licenseNumber, int yearsOfExperience, long personId) {
+	public Driver(long id, String firstName, String lastName, String address, String phoneNumber, String email, String licenseNumber, Integer yearsOfExperience, long personId) {
         super(id, firstName, lastName, address, phoneNumber, email);
         this.licenseNumber = licenseNumber;
         this.yearsOfExperience = yearsOfExperience;
@@ -47,11 +47,11 @@ public class Driver extends Person{
         this.licenseNumber = licenseNumber;
     }
 
-    public int getYearsOfExperience() {
+    public Integer getYearsOfExperience() {
         return yearsOfExperience;
     }
 
-    public void setYearsOfExperience(int yearsOfExperience) {
+    public void setYearsOfExperience(Integer yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
     }
 
@@ -77,9 +77,5 @@ public class Driver extends Person{
                 Objects.equals(licenseNumber, driver.licenseNumber);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), licenseNumber, yearsOfExperience, personId);
-    }
 }
 

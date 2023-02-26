@@ -29,7 +29,7 @@ public class BusService {
         busDao.deleteEntity(id);
     }
 
-    public Bus getBusByBusNumber(int busNumber) {
+    public Bus getBusByBusNumber(Integer busNumber) {
         return busDao.getBusByBusNumber(busNumber);
     }
 

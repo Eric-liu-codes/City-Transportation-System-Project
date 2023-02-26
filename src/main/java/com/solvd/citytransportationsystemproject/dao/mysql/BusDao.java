@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BusDao extends MySQLDao<Bus> implements IBusDao {
-    private static final Logger logger = LogManager.getLogger(BusDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(BusDao.class);
 
     @Override
     public Bus createEntity(Bus entity){
@@ -29,7 +29,7 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
             statement.setLong(3, entity.getVehicleId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -39,7 +39,7 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return entity;
@@ -59,7 +59,7 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
             resultSet = statement.executeQuery();
             bus = resultSetToObject(resultSet);
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -72,7 +72,7 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return bus;
@@ -92,7 +92,7 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
             statement.setLong(3, entity.getId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -102,7 +102,7 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -119,7 +119,7 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -129,13 +129,13 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
 
     @Override
-    public Bus getBusByBusNumber(int busNumber){
+    public Bus getBusByBusNumber(Integer busNumber){
         String sql = "SELECT * FROM Bus WHERE bus_number = ?";
         PreparedStatement statement = null;
         Connection connection = null;
@@ -148,7 +148,7 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
             resultSet = statement.executeQuery();
             bus = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -161,7 +161,7 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return bus;
@@ -186,7 +186,7 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
                 buses.add(bus);
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -199,7 +199,7 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return buses;
@@ -216,10 +216,11 @@ public class BusDao extends MySQLDao<Bus> implements IBusDao {
                 bus.setVehicleId(resultSet.getLong("vehicle_id"));
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         }
         return bus;
     }
+
 
 
 }

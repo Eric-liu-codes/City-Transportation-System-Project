@@ -134,6 +134,33 @@ CREATE TABLE IF NOT EXISTS `TransportationSystem`.`Station` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `TransportationSystem`.`StationNeighbor`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `TransportationSystem`.`StationNeighbor`;
+
+CREATE TABLE IF NOT EXISTS `TransportationSystem`.`StationNeighbor` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `station1_id` INT NOT NULL,
+  `station2_id` INT NOT NULL,
+  `distance` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Neighbor_Station1_idx` (`station1_id` ASC),
+  INDEX `fk_Neighbor_Station2_idx` (`station2_id` ASC),
+  CONSTRAINT `fk_Neighbor_Station1`
+    FOREIGN KEY (`station1_id`)
+    REFERENCES `TransportationSystem`.`Station` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Neighbor_Station2`
+    FOREIGN KEY (`station2_id`)
+    REFERENCES `TransportationSystem`.`Station` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
+
 
 -- -----------------------------------------------------
 -- Table `TransportationSystem`.`Bus`

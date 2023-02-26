@@ -28,7 +28,7 @@ public class Train extends Vehicle {
 		super();
 	}
 
-	public Train(long id, String make, String model, int year, int capacity, long driverId, String trainHeadcode, long vehicleId) {
+	public Train(long id, String make, String model, Integer year, Integer capacity, long driverId, String trainHeadcode, long vehicleId) {
         super(id, make, model, year, capacity, driverId);
         this.trainHeadcode = trainHeadcode;
         this.vehicleId = vehicleId;
@@ -61,10 +61,7 @@ public class Train extends Vehicle {
 				vehicleId == train.vehicleId;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), trainHeadcode, vehicleId);
-	}
+
     
 }
 

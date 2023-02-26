@@ -28,7 +28,7 @@ public class Taxi extends Vehicle {
 		super();
 	}
 
-	public Taxi(long id, String make, String model, int year, int capacity, long driverId, String licensePlate, long vehicleId) {
+	public Taxi(long id, String make, String model, Integer year, Integer capacity, long driverId, String licensePlate, long vehicleId) {
         super(id, make, model, year, capacity, driverId);
         this.licensePlate = licensePlate;
         this.vehicleId = vehicleId;
@@ -61,8 +61,5 @@ public class Taxi extends Vehicle {
 				vehicleId == taxi.vehicleId;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), licensePlate, vehicleId);
-	}
+
 }

@@ -8,7 +8,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 public class MyBatisRunner {
-    static Logger logger = Logger.getLogger(MyBatisRunner.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MyBatisRunner.class.getName());
     private static SqlSessionFactory sqlSessionFactory;
     static {
         try {
@@ -16,7 +16,7 @@ public class MyBatisRunner {
             Reader reader = Resources.getResourceAsReader(resource);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         } catch (IOException e) {
-            logger.info(String.valueOf(e));
+            LOGGER.info(String.valueOf(e));
         }
     }
     public static SqlSessionFactory getSqlSessionFactory() {
