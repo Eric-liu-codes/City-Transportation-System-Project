@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TrainDao extends MySQLDao<Train> implements ITrainDao {
-    private static final Logger logger = LogManager.getLogger(TrainDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(TrainDao.class);
 
     @Override
     public Train createEntity(Train entity){
@@ -29,7 +29,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
             statement.setString(3, entity.getTrainHeadcode());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -39,7 +39,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return entity;
@@ -60,7 +60,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
             resultSet = statement.executeQuery();
             train = resultSetToObject(resultSet);
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -73,7 +73,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return train;
@@ -93,7 +93,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
             statement.setLong(3, entity.getId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -103,7 +103,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -120,7 +120,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -130,7 +130,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -149,7 +149,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
             resultSet = statement.executeQuery();
             train = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -162,7 +162,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return train;
@@ -188,7 +188,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
                 trains.add(train);
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -201,7 +201,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return trains;
@@ -219,7 +219,7 @@ public class TrainDao extends MySQLDao<Train> implements ITrainDao {
                 train.setTrainHeadcode(resultSet.getString("train_headcode"));
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         }
         return train;
     }

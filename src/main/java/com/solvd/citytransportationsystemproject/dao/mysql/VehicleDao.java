@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
-    private static final Logger logger = LogManager.getLogger(VehicleDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(VehicleDao.class);
 
 
     @Override
@@ -33,7 +33,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
             statement.setLong(6, entity.getDriverId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -43,7 +43,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return entity;
@@ -64,7 +64,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
             resultSet = statement.executeQuery();
             vehicle = resultSetToObject(resultSet);
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -77,7 +77,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return vehicle;
@@ -100,7 +100,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
             statement.setLong(6, entity.getId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -110,7 +110,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -127,7 +127,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -137,7 +137,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -156,7 +156,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
             resultSet = statement.executeQuery();
             vehicle = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -169,7 +169,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return vehicle;
@@ -197,7 +197,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
                 vehicles.add(vehicle);
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -210,7 +210,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return vehicles;
@@ -231,7 +231,7 @@ public class VehicleDao extends MySQLDao<Vehicle> implements IVehicleDao {
                 vehicle.setDriverId(resultSet.getLong("driver_id"));
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         }
         return vehicle;
     }

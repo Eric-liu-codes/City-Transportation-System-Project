@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RouteDao extends MySQLDao<Route> implements IRouteDao {
-    private static final Logger logger = LogManager.getLogger(RouteDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(RouteDao.class);
 
     @Override
     public Route createEntity(Route entity) {
@@ -29,7 +29,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
             statement.setLong(3, entity.getVehicleId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -39,7 +39,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return entity;
@@ -60,7 +60,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
             resultSet = statement.executeQuery();
             route = resultSetToObject(resultSet);
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -73,7 +73,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return route;
@@ -93,7 +93,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
             statement.setLong(5, entity.getId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -103,7 +103,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -120,7 +120,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -130,7 +130,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -149,7 +149,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
             resultSet = statement.executeQuery();
             route = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -162,7 +162,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return route;
@@ -182,7 +182,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
             resultSet = statement.executeQuery();
             route = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -195,7 +195,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return route;
@@ -220,7 +220,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
                 routes.add(route);
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -233,7 +233,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return routes;
@@ -250,7 +250,7 @@ public class RouteDao extends MySQLDao<Route> implements IRouteDao {
                 route.setVehicleId(resultSet.getLong("vehicle_id"));
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         }
         return route;
     }

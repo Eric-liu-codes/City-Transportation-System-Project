@@ -103,9 +103,5 @@ public class Person extends Model{
                 Objects.equals(email, person.email);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstName, lastName, address, phoneNumber, email);
-    }
-    
+
 }

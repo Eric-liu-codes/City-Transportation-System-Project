@@ -1,7 +1,5 @@
 package com.solvd.citytransportationsystemproject.models;
 
-import java.util.Objects;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -26,11 +24,11 @@ public class Vehicle extends Model {
 	
 	@JsonProperty("year")
     @XmlElement
-    private int year;
+    private Integer year;
 	
 	@JsonProperty("capacity")
     @XmlElement
-    private int capacity;
+    private Integer capacity;
 	
 	@JsonProperty("driverID")
     @XmlElement
@@ -40,7 +38,7 @@ public class Vehicle extends Model {
 		super();
 	}
 
-	public Vehicle(long id, String make, String model, int year, int capacity, long driverId) {
+	public Vehicle(long id, String make, String model, Integer year, Integer capacity, long driverId) {
         super(id);
         this.make = make;
         this.model = model;
@@ -65,19 +63,19 @@ public class Vehicle extends Model {
 		this.model = model;
 	}
 
-	public int getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 
-	public int getCapacity() {
+	public Integer getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(int capacity) {
+	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
 
@@ -101,11 +99,6 @@ public class Vehicle extends Model {
 				this.model.equals(vehicle.getModel()) &&
 				this.year == vehicle.getYear() &&
 				this.capacity == vehicle.getCapacity();
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.getId(), this.make, this.model, this.year, this.capacity);
 	}
     
 }

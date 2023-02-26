@@ -17,7 +17,7 @@
 	</environments>
 	<mappers>
 		<mapper
-			resource="com/solvd/resources/mappers/AppointmentMapper.xml" />
-		<mapper resource="com/solvd/resources/mappers/RoomMapper.xml" />
+			resource="com/solvd/resources/mappers/stationNeighborMapper.xml" />
+		<mapper resource="com/solvd/resources/mappers/stationMapper.xml" />
 	</mappers>
 </configuration>

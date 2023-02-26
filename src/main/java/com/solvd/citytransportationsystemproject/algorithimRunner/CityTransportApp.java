@@ -1,58 +1,139 @@
+
 package com.solvd.citytransportationsystemproject.algorithimRunner;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 import com.solvd.citytransportationsystemproject.models.Station;
+import com.solvd.citytransportationsystemproject.models.StationConnection;
 import com.solvd.citytransportationsystemproject.utils.Parser;
 
 public class CityTransportApp {
-    static Logger logger = Logger.getLogger(CityTransportApp.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CityTransportApp.class.getName());
     private static final int INFINITY = Integer.MAX_VALUE;
-    private ArrayList<Station> stations;
+    private List<Station> stations;
     private int[][] graph;
-    private int next;
 
     // The main method of the application where user input and program execution happens
     public static void main(String[] args) {
-    	
-
         CityTransportApp cityTransportation = new CityTransportApp();
         cityTransportation.initializeStations();
         cityTransportation.initializeGraph();
         Scanner scanner = new Scanner(System.in);
-        logger.info("Enter start location: ");
+        LOGGER.info("Enter start location: ");
         String start = scanner.nextLine();
-        logger.info("Enter end location: ");
+        LOGGER.info("Enter end location: ");
         String end = scanner.nextLine();
-        cityTransportation.getShortestPath(start, end);
+        ShortestPath shortestPath = new ShortestPath(cityTransportation.stations, cityTransportation.graph);
+        List<String> path = shortestPath.findShortestPath(start, end);
+        if (path.isEmpty()) {
+            LOGGER.info("There is no path between " + start + " and " + end + ".");
+            LOGGER.info("Would you like us to call a taxi to your location? (yes/no)");
+            String response = scanner.nextLine();
+            if (response.equals("yes")) {
+                LOGGER.info("A taxi has been dispatched to your location.");
+            } else {
+                LOGGER.info("Thank you for using our transportation system.");
+            }
+        } else {
+            LOGGER.info("The shortest path from " + start + " to " + end + " is: " + path);
+        }
     }
 
     // Initializes the stations with their names and indices
     private void initializeStations() {
-    	/*
-    	    Parser parser = new Parser();
-    	    List<Station> stationList = parser.parseXML("stations.xml");
-    	    stations = new ArrayList<Station>();
-    	    for (Station station : stationList) {
-    	        stations.add(station);
-    	    }
-    	}
-    	*/
-    	
-        stations = new ArrayList<Station>();
-        stations.add(new Station("A", 0));
-        stations.add(new Station("B", 1));
-        stations.add(new Station("C", 2));
-        stations.add(new Station("D", 3));
-        stations.add(new Station("E", 4));
-        stations.add(new Station("F", 5));
-        
+        Parser parser = new Parser();
+        List<Station> stationList = parser.parseXML("stationMapper.xml");
+        stations = new ArrayList<>();
+        for (Station station : stationList) {
+            stations.add(station);
+        }
     }
 
     // Initializes the graph representing the connections between stations
     private void initializeGraph() {
-        graph = new int[][]{
+        graph = new int[stations.size()][stations.size()];
+        for (int i = 0; i < stations.size(); i++) {
+            for (int j = 0; j < stations.size(); j++) {
+                if (i == j) {
+                    graph[i][j] = 0;
+                } else {
+                    Station station1 = stations.get(i);
+                    Station station2 = stations.get(j);
+                    int distance = getDistanceBetween(station1, station2);
+                    if (distance != -1) {
+                        graph[i][j] = distance;
+                        StationConnection neighbor = new StationConnection(
+                            getNextId(),  // use a method to get the next id
+                            station1.getId(),
+                            station2.getId(),
+                            distance
+                        );
+                        station1.addStationNeighbor(neighbor);
+                        // Also add the reverse neighbor to the other station
+                        StationConnection reverseNeighbor = new StationConnection(
+                            getNextId(),
+                            station2.getId(),
+                            station1.getId(),
+                            distance
+                        );
+                        station2.addStationNeighbor(reverseNeighbor);
+                    } else {
+                        graph[i][j] = INFINITY;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    private long getNextId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	private int getDistanceBetween(Station station1, Station station2) {
+        for (StationConnection neighbor : station1.getNeighbors()) {
+            if (neighbor.getStation1Id() == station1.getId() && neighbor.getStation2Id() == station2.getId()) {
+                return neighbor.getDistance();
+            } else if (neighbor.getStation1Id() == station2.getId() && neighbor.getStation2Id() == station1.getId()) {
+                return neighbor.getDistance();
+            }
+        }
+        return -1;
+    }
+
+
+    // Checks if two stations are connected to each other
+    private boolean isConnected(Station station1, Station station2) {
+        List<Station> neighbors = station1.getNeighbors();
+        for (Station neighbor : neighbors) {
+            if (neighbor.getName().equals(station2.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+/* For Reference:
+  A --5-- B
+  |       |
+  10      4
+  |       |
+  E --3-- C
+  |
+  5
+  |
+  D       F
+  
+  
+    // Initializes the graph representing the connections between stations
+    private void initializeGraph() {
+        graph = new Integer[][]{
         	{0, 5, INFINITY, INFINITY, 10, INFINITY}, 
         	{5, 0, 4, INFINITY, INFINITY, INFINITY},
         	{INFINITY, 4, 0, INFINITY, INFINITY, INFINITY}, 
@@ -61,89 +142,4 @@ public class CityTransportApp {
         	{INFINITY, INFINITY, INFINITY,INFINITY, INFINITY, 0}};
     }
 
-    // Finds the shortest path between the start and end locations
-    private void getShortestPath(String start, String end) {
-        int startIndex = -1;
-        int endIndex = -1;
-        for (int i = 0; i < stations.size(); i++) {
-            if (stations.get(i).getName().equals(start)) {
-                startIndex = i;
-            }
-            if (stations.get(i).getName().equals(end)) {
-                endIndex = i;
-            }
-        }
-        // If either the start or end location is not found in the list of stations, return
-        if (startIndex == -1 || endIndex == -1) {
-            logger.info("Invalid location entered.");
-            return;
-        }
-
-        // Initializing the distances and previous arrays, and the visited array
-        int[] distances = new int[stations.size()];
-        int[] previous = new int[stations.size()];
-        boolean[] visited = new boolean[stations.size()];
-        for (int i = 0; i < stations.size(); i++) {
-            distances[i] = INFINITY;
-            previous[i] = -1;
-            visited[i] = false;
-        }
-        distances[startIndex] = 0;
-
-        for (int i = 0; i < stations.size(); i++) {
-            int current = -1;
-            int min = INFINITY;
-            for (int j = 0; j < stations.size(); j++) {
-                if (!visited[j] && distances[j] < min) {
-                    current = j;
-                    min = distances[j];
-                }
-            }
-            if (current == -1) {
-                break;
-            }
-            // Implementing the Dijkstra's algorithm
-            visited[current] = true;
-            for (int j = 0; j < stations.size(); j++) {
-                if (!visited[j] && graph[current][j] != INFINITY) {
-                    int newDistance = distances[current] + graph[current][j];
-                    if (newDistance < distances[j]) {
-                        distances[j] = newDistance;
-                        previous[j] = current;
-                    }
-                }
-            }
-        }
-
-        if (previous[endIndex] == -1) {
-            logger.info("There is no path between " + start + " and " + end + ".");
-            logger.info("Would you like us to call a taxi to your location? (yes/no)");
-            Scanner scanner = new Scanner(System.in);
-            String response = scanner.nextLine();
-            if (response.equals("yes")) {
-                logger.info("A taxi has been dispatched to your location.");
-            } else {
-                logger.info("Thank you for using our transportation system.");
-            }
-            return;
-        }
-        int current = next;
-
-
-        // Returns the index of the station with the minimum distance that has not been visited
-        ArrayList<String> path = new ArrayList<>();
-        current = endIndex;
-        while (current != startIndex) {
-            path.add(0, stations.get(current).getName());
-            current = previous[current];
-        }
-        path.add(0, start);
-        // Print the shortest path
-        logger.info("The shortest path from " + start + " to " + end + " is: ");
-        for (int i = 0; i < path.size(); i++) {
-            logger.info(path.get(i));
-        }
-        logger.info("The total distance is " + distances[endIndex] + ".");
-    }
-
-}
+*/

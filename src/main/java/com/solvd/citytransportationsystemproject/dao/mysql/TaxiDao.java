@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
-    private static final Logger logger = LogManager.getLogger(TaxiDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(TaxiDao.class);
 
     @Override
     public Taxi createEntity(Taxi entity){
@@ -29,7 +29,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
             statement.setString(3, entity.getLicensePlate());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -39,7 +39,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return entity;
@@ -60,7 +60,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
             resultSet = statement.executeQuery();
             taxi = resultSetToObject(resultSet);
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -73,7 +73,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return taxi;
@@ -93,7 +93,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
             statement.setLong(3, entity.getId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -103,7 +103,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -120,7 +120,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -130,7 +130,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -149,7 +149,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
             resultSet = statement.executeQuery();
             taxi = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -162,7 +162,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return taxi;
@@ -187,7 +187,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
                 taxis.add(taxi);
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -200,7 +200,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return taxis;
@@ -218,7 +218,7 @@ public class TaxiDao extends MySQLDao<Taxi> implements ITaxiDao {
                 taxi.setLicensePlate(resultSet.getString("license_plate"));
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         }
         return taxi;
     }

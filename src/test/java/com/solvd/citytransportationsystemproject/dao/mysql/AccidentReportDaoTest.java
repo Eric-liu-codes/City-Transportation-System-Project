@@ -14,7 +14,7 @@ import static junit.framework.TestCase.*;
 public class AccidentReportDaoTest {
 
     private AccidentReportDao accidentReportDao = new AccidentReportDao();
-    private static final Logger logger = LogManager.getLogger(AccidentReportDaoTest.class);
+    private static final Logger LOGGER = LogManager.getLogger(AccidentReportDaoTest.class);
 
 //    @Test
 //    public void testCreateEntity() {

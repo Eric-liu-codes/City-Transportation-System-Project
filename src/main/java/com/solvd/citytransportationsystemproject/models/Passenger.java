@@ -18,7 +18,7 @@ public class Passenger extends Person {
 	
 	@JsonProperty("numberOfRides")
     @XmlElement
-    private int numberOfRides;
+    private Integer numberOfRides;
 	
 	@JsonProperty("personId")
     @XmlElement
@@ -30,17 +30,17 @@ public class Passenger extends Person {
 		super();
 	}
 
-	public Passenger(long id, String firstName, String lastName, String address, String phoneNumber, String email, int numberOfRides, long personId) {
+	public Passenger(long id, String firstName, String lastName, String address, String phoneNumber, String email, Integer numberOfRides, long personId) {
         super(id, firstName, lastName, address, phoneNumber, email);
         this.numberOfRides = numberOfRides;
         this.personId = personId;
     }
 
-    public int getNumberOfRides() {
+    public Integer getNumberOfRides() {
         return numberOfRides;
     }
 
-    public void setNumberOfRides(int numberOfRides) {
+    public void setNumberOfRides(Integer numberOfRides) {
         this.numberOfRides = numberOfRides;
     }
 
@@ -64,8 +64,4 @@ public class Passenger extends Person {
         return numberOfRides == passenger.numberOfRides && personId == passenger.personId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), numberOfRides, personId);
-    }
 }

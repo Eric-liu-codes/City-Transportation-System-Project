@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
-    private static final Logger logger = LogManager.getLogger(TicketDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(TicketDao.class);
 
     @Override
     public Ticket createEntity(Ticket entity){
@@ -30,7 +30,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
             statement.setLong(4, entity.getPassengerId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -40,7 +40,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return entity;
@@ -61,7 +61,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
             resultSet = statement.executeQuery();
             ticket = resultSetToObject(resultSet);
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -74,7 +74,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return ticket;
@@ -95,7 +95,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
             statement.setLong(4, entity.getId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -105,7 +105,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -122,7 +122,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -132,7 +132,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -152,7 +152,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
             resultSet = statement.executeQuery();
             ticket = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -165,7 +165,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return ticket;
@@ -192,7 +192,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
                 tickets.add(ticket);
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -205,7 +205,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return tickets;
@@ -224,7 +224,7 @@ public class TicketDao extends MySQLDao<Ticket> implements ITicketDao {
                 ticket.setPassengerId(resultSet.getLong("passenger_id"));
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         }
         return ticket;
     }

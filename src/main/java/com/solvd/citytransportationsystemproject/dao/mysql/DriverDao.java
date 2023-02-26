@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
-    private static final Logger logger = LogManager.getLogger(DriverDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(DriverDao.class);
 
     @Override
     public Driver createEntity(Driver entity){
@@ -30,7 +30,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
             statement.setLong(4, entity.getPersonId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -40,7 +40,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return entity;
@@ -61,7 +61,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
             resultSet = statement.executeQuery();
             driver = resultSetToObject(resultSet);
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -74,7 +74,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return driver;
@@ -95,7 +95,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
             statement.setLong(5, entity.getId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -105,7 +105,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -121,7 +121,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -131,7 +131,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -150,7 +150,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
             resultSet = statement.executeQuery();
             driver = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -163,7 +163,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return driver;
@@ -189,7 +189,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
                 drivers.add(driver);
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -202,7 +202,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return drivers;
@@ -221,7 +221,7 @@ public class DriverDao extends MySQLDao<Driver> implements IDriverDao {
                 driver.setPersonId(resultSet.getLong("person_id"));
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         }
         return driver;
     }

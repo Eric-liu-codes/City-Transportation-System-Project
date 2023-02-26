@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implements IVehicleMaintenance {
-    private static final Logger logger = LogManager.getLogger(VehicleMaintenance.class);
+    private static final Logger LOGGER = LogManager.getLogger(VehicleMaintenance.class);
 
     @Override
     public VehicleMaintenance createEntity(VehicleMaintenance entity){
@@ -31,7 +31,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
             statement.setLong(5, entity.getVehicleId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -41,7 +41,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return entity;
@@ -62,7 +62,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
             resultSet = statement.executeQuery();
             vehicleMaintenance = resultSetToObject(resultSet);
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -75,7 +75,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return vehicleMaintenance;
@@ -97,7 +97,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
             statement.setLong(5, entity.getId());
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -107,7 +107,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -124,7 +124,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (statement != null) {
@@ -134,7 +134,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
     }
@@ -153,7 +153,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
             resultSet = statement.executeQuery();
             vehicleMaintenance = resultSetToObject(resultSet);
         } catch (Exception e){
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -166,7 +166,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return vehicleMaintenance;
@@ -194,7 +194,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
                 vehicleMaintenanceList.add(vehicleMaintenance);
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -207,7 +207,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
                     ConnectionPool.getInstance().releaseConnection(connection);
                 }
             } catch (Exception e) {
-                logger.info(e);
+                LOGGER.info(e);
             }
         }
         return vehicleMaintenanceList;
@@ -227,7 +227,7 @@ public class VehicleMaintenanceDao extends MySQLDao<VehicleMaintenance> implemen
                 vehicleMaintenance.setVehicleId(resultSet.getLong("vehicle_id"));
             }
         } catch (Exception e) {
-            logger.info(e);
+            LOGGER.info(e);
         }
         return vehicleMaintenance;
     }

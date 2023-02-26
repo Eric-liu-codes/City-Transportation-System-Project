@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @XmlRootElement(name = "Model")
 @XmlAccessorType(XmlAccessType.FIELD)
 
-public class Model {
+abstract public class Model {
 	
 	@JsonProperty("id")
     @XmlElement

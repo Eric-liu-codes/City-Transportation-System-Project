@@ -69,12 +69,85 @@ VALUES (1, "Route 1", 1),
 (4, "Route 4", 4),
 (5, "Route 5", 5);
 
-INSERT INTO Station (id, name, type, address, route_id)
-VALUES (1, "Station 1", "Bus", "111 Oak St", 1),
-(2, "Station 2", "Train", "222 Cedar St", 2),
-(3, "Station 3", "Bus", "333 Birch St", 3),
-(4, "Station 4", "Train", "444 Willow St", 4),
-(5, "Station 5", "Train", "555 Magnolia St", 5);
+INSERT INTO Station (id, name, type, address, route_id) VALUES
+(1, 'A', 'Type A', '123 Main St.', 1),
+(2, 'B', 'Type B', '456 Elm St.', 1),
+(3, 'C', 'Type C', '789 Oak St.', 2),
+(4, 'D', 'Type D', '321 Maple St.', 2),
+(5, 'E', 'Type E', '654 Pine St.', 3),
+(6, 'F', 'Type F', '987 Cedar St.', 3);
+
+-- A to B (5)
+INSERT INTO TransportationSystem.StationNeighbor (id, station_1_id, station_2_id, distance) 
+VALUES 
+    ((SELECT id FROM TransportationSystem.Station WHERE name = 'A'), 
+     (SELECT id FROM TransportationSystem.Station WHERE name = 'B'), 
+     5);
+     
+-- B to A (5)
+INSERT INTO TransportationSystem.StationNeighbor (id, station_1_id, station_2_id, distance) 
+VALUES 
+    ((SELECT id FROM TransportationSystem.Station WHERE name = 'B'), 
+     (SELECT id FROM TransportationSystem.Station WHERE name = 'A'), 
+     5);
+
+-- A to E (10)
+INSERT INTO TransportationSystem.StationNeighbor (id, station_1_id, station_2_id, distance) 
+VALUES 
+    ((SELECT id FROM TransportationSystem.Station WHERE name = 'A'), 
+     (SELECT id FROM TransportationSystem.Station WHERE name = 'E'), 
+     10);
+
+-- E to A (10)
+INSERT INTO TransportationSystem.StationNeighbor (id, station_1_id, station_2_id, distance)
+VALUES 
+    ((SELECT id FROM TransportationSystem.Station WHERE name = 'E'), 
+     (SELECT id FROM TransportationSystem.Station WHERE name = 'A'), 
+     10);
+
+-- B to C (4)
+INSERT INTO TransportationSystem.StationNeighbor (id, station_1_id, station_2_id, distance)
+VALUES 
+    ((SELECT id FROM TransportationSystem.Station WHERE name = 'B'), 
+     (SELECT id FROM TransportationSystem.Station WHERE name = 'C'), 
+     4);
+
+-- C to B (4)
+INSERT INTO TransportationSystem.StationNeighbor (id, station_1_id, station_2_id, distance)
+VALUES 
+    ((SELECT id FROM TransportationSystem.Station WHERE name = 'C'), 
+     (SELECT id FROM TransportationSystem.Station WHERE name = 'B'), 
+     4);
+     
+-- C to E (3)
+INSERT INTO TransportationSystem.StationNeighbor (station_1_id, station_2_id, distance) 
+VALUES 
+    ((SELECT id FROM TransportationSystem.Station WHERE name = 'C'), 
+     (SELECT id FROM TransportationSystem.Station WHERE name = 'E'), 
+     2);
+     
+-- E to C (3)
+INSERT INTO TransportationSystem.StationNeighbor (station_1_id, station_2_id, distance) 
+VALUES 
+    ((SELECT id FROM TransportationSystem.Station WHERE name = 'E'), 
+     (SELECT id FROM TransportationSystem.Station WHERE name = 'C'), 
+     3);
+
+-- D to E (5)
+INSERT INTO TransportationSystem.StationNeighbor (id, station_1_id, station_2_id, distance) 
+VALUES 
+    ((SELECT id FROM TransportationSystem.Station WHERE name = 'D'), 
+     (SELECT id FROM TransportationSystem.Station WHERE name = 'E'), 
+     5);
+
+-- E to D (5)
+INSERT INTO TransportationSystem.StationNeighbor (id, station_1_id, station_2_id, distance)
+VALUES 
+    ((SELECT id FROM TransportationSystem.Station WHERE name = 'E'), 
+     (SELECT id FROM TransportationSystem.Station WHERE name = 'D'), 
+     5);
+
+
 
 INSERT INTO Ticket (id, payment_method, fare, passenger_id)
 VALUES (1, "Credit Card", 10.5, 1),
